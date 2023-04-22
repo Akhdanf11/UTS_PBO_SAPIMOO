@@ -5,7 +5,11 @@
 package tugaspbo;
 
 import java.awt.Color;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -65,6 +69,11 @@ public class POSFrame extends javax.swing.JFrame {
         
         initComponents();
         
+        Date date = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm:ss");
+        s.setTimeZone(TimeZone.getTimeZone("GMT+7"));      
+        tanggalTextField.setText(s.format(date));
+        
         daftarModel = daftarTable.getModel();
         daftarModel.addTableModelListener(new TableModelListener()
                 {
@@ -95,6 +104,8 @@ public class POSFrame extends javax.swing.JFrame {
 
 
                         }
+                        
+                            
                     }
                     
                 }
@@ -133,6 +144,8 @@ public class POSFrame extends javax.swing.JFrame {
         jSeparator6 = new javax.swing.JSeparator();
         KembalianTextField = new javax.swing.JTextField();
         totalBelanjaTextField = new javax.swing.JTextField();
+        bayarButton = new javax.swing.JButton();
+        tanggalTextField = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         daftarTable = new javax.swing.JTable();
@@ -222,20 +235,35 @@ public class POSFrame extends javax.swing.JFrame {
         totalBelanjaTextField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         totalBelanjaTextField.setMinimumSize(new java.awt.Dimension(84, 40));
 
+        bayarButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        bayarButton.setText("BAYAR");
+        bayarButton.setDefaultCapable(false);
+        bayarButton.setFocusPainted(false);
+        bayarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bayarButtonActionPerformed(evt);
+            }
+        });
+
+        tanggalTextField.setBackground(new java.awt.Color(23, 23, 23));
+        tanggalTextField.setBorder(null);
+        tanggalTextField.setDisabledTextColor(new java.awt.Color(255, 255, 255));
+        tanggalTextField.setEnabled(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(161, 161, 161)
-                .addComponent(jLabel4)
+                .addGap(156, 156, 156)
+                .addComponent(bayarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jSeparator5))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
@@ -259,7 +287,7 @@ public class POSFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -270,7 +298,7 @@ public class POSFrame extends javax.swing.JFrame {
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(totalBelanjaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -279,7 +307,14 @@ public class POSFrame extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(KembalianTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(KembalianTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(tanggalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -287,7 +322,9 @@ public class POSFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(jLabel4)
-                .addGap(45, 45, 45)
+                .addGap(5, 5, 5)
+                .addComponent(tanggalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(CodeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -305,7 +342,7 @@ public class POSFrame extends javax.swing.JFrame {
                     .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalBelanjaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -323,7 +360,9 @@ public class POSFrame extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(118, 118, 118))
+                .addGap(29, 29, 29)
+                .addComponent(bayarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
 
         daftarTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -553,7 +592,7 @@ public class POSFrame extends javax.swing.JFrame {
                 daftarModel.setValueAt(tempItem.price, tempIndex, 3);
                 daftarModel.setValueAt(1, tempIndex, 4);
                 
-        }
+            }
         
         }
     }//GEN-LAST:event_CodeTextFieldActionPerformed
@@ -596,6 +635,42 @@ public class POSFrame extends javax.swing.JFrame {
        BayarTextField.setText(String.format("%,d",dibayarInput));
     }//GEN-LAST:event_BayarTextFieldKeyReleased
 
+    private void bayarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bayarButtonActionPerformed
+        // TODO add your handling code here:
+        ArrayList<Transaksi> transaksi = new ArrayList();
+        
+        Transaksi xx = new Transaksi();
+        
+        String totalTransaksiString = totalBelanjaTextField.getText();
+        totalTransaksiString = totalTransaksiString.replace(",","");
+        xx.totalTransaksi = Integer.valueOf(totalTransaksiString);
+        
+        String bayarTransaksiString = BayarTextField.getText();
+        bayarTransaksiString = bayarTransaksiString.replace(",","");
+        xx.bayarTransaksi = Integer.valueOf(bayarTransaksiString);
+        
+        String kembalianTransaksiString = KembalianTextField.getText();
+        kembalianTransaksiString = kembalianTransaksiString.replace(",","");
+        xx.kembalianTransaksi = Integer.valueOf(kembalianTransaksiString);
+        
+        xx.waktuTransaksi = tanggalTextField.getText();
+        
+        for (int i = 0; i < JumlahBelanja; i++) {
+            String barangTransaksi = (String) daftarModel.getValueAt(i, 2);
+            int jumlahTransaksi = (int) daftarModel.getValueAt(i, 4);
+            xx.informasiBarang(barangTransaksi, jumlahTransaksi);   
+        }
+        
+        transaksi.add(xx);
+        
+        /*
+        System.out.println(xx.totalTransaksi);
+        System.out.println(xx.bayarTransaksi);
+        System.out.println(xx.kembalianTransaksi);
+        System.out.println(xx.waktuTransaksi);
+        */
+    }//GEN-LAST:event_bayarButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -637,6 +712,7 @@ public class POSFrame extends javax.swing.JFrame {
     private javax.swing.JTextField KembalianTextField;
     private javax.swing.JTextField NameTextField;
     private javax.swing.JTextField PriceTextField;
+    private javax.swing.JButton bayarButton;
     private javax.swing.JTable daftarTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -657,6 +733,7 @@ public class POSFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JTextField tanggalTextField;
     private javax.swing.JTextField totalBelanjaTextField;
     // End of variables declaration//GEN-END:variables
 }
