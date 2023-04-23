@@ -19,6 +19,10 @@ public class Transaksi {
     public String informasiBarang(String nama, int jumlah) {
         String deskripsi = "";
         deskripsi = nama + " x" + Integer.toString(jumlah) + "\n";
+        System.out.println(totalTransaksi);
+        System.out.println(bayarTransaksi);
+        System.out.println(kembalianTransaksi);
+        System.out.println(waktuTransaksi);
         return deskripsi;
     }
 }

@@ -15,7 +15,7 @@ public class Tugaspbo {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        POSFrame frame = new POSFrame();
+        LoginFrame frame = new LoginFrame();
         frame.setVisible(true);
     }
     
