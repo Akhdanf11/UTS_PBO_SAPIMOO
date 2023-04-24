@@ -5,11 +5,14 @@
 package tugaspbo;
 
 import java.awt.Color;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -70,7 +73,7 @@ public class POSFrame extends javax.swing.JFrame {
         initComponents();
         
         Date date = new Date();
-        SimpleDateFormat s = new SimpleDateFormat("dd-MM-yyyy' 'HH:mm:ss");
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         s.setTimeZone(TimeZone.getTimeZone("GMT+7"));      
         tanggalTextField.setText(s.format(date));
         
@@ -653,12 +656,13 @@ public class POSFrame extends javax.swing.JFrame {
         kembalianTransaksiString = kembalianTransaksiString.replace(",","");
         xx.kembalianTransaksi = Integer.valueOf(kembalianTransaksiString);
         
-        xx.waktuTransaksi = tanggalTextField.getText();
+        xx.waktuTransaksi = tanggalTextField.getText(); 
         
         for (int i = 0; i < JumlahBelanja; i++) {
+            String kodeTransaksi = (String) daftarModel.getValueAt(i, 1);
             String barangTransaksi = (String) daftarModel.getValueAt(i, 2);
             int jumlahTransaksi = (int) daftarModel.getValueAt(i, 4);
-            xx.informasiBarang(barangTransaksi, jumlahTransaksi);   
+             xx.informasiBarang(kodeTransaksi, barangTransaksi, jumlahTransaksi);
         }
         
         transaksi.add(xx);

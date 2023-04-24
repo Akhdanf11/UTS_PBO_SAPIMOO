@@ -4,7 +4,9 @@
  */
 package tugaspbo;
 
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -16,13 +18,24 @@ public class Transaksi {
     public int kembalianTransaksi;
     public String waktuTransaksi;
     
-    public String informasiBarang(String nama, int jumlah) {
+    public String informasiBarang(String kode, String nama, int jumlah) {
         String deskripsi = "";
         deskripsi = nama + " x" + Integer.toString(jumlah) + "\n";
-        System.out.println(totalTransaksi);
-        System.out.println(bayarTransaksi);
-        System.out.println(kembalianTransaksi);
-        System.out.println(waktuTransaksi);
+//        Statement stmt = DBConnector.connection.createStatement();
+//        String sql = "INSERT INTO tb_barang values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",null)";
+//        ResultSet rs = stmt.executeQuery(sql);
+
+        try {
+            Statement stmt = DBConnector.connection.createStatement();
+//            java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(waktuTransaksi);
+            
+            String sql = "INSERT INTO tb_transaksi values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",getdate())";
+            stmt.executeUpdate(sql);
+            
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
         return deskripsi;
     }
 }
