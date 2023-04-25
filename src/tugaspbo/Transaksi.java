@@ -22,9 +22,9 @@ public class Transaksi {
     public String waktuTransaksi;
     public String deskripsiBarang = "";
     
-    public String informasiBarang(String kode, String nama, int jumlah) {
-        //String deskripsi = "";
-        //deskripsi = nama + " x" + Integer.toString(jumlah) + "\n";
+    public String informasiBarang(String nama, int jumlah) {
+        String deskripsi = "";
+        deskripsi = nama + " x" + Integer.toString(jumlah) + "\n";
 //        Statement stmt = DBConnector.connection.createStatement();
 //        String sql = "INSERT INTO tb_barang values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",null)";
 //        ResultSet rs = stmt.executeQuery(sql);
@@ -33,21 +33,21 @@ public class Transaksi {
 //        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 //        s.setTimeZone(TimeZone.getTimeZone("GMT+7"));  
         
-        try {
-            Statement stmt = DBConnector.connection.createStatement();
-//            java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(waktuTransaksi);
-//            String waktu = s.format(date);
-            
-            System.out.println(deskripsiBarang);
-            String sql = "INSERT INTO tb_transaksi values (null,"+kode+",'"+deskripsiBarang+"',"+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",'"+waktuTransaksi+"')";
-            stmt.executeUpdate(sql);
-            
-            
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
+//        try {
+//            Statement stmt = DBConnector.connection.createStatement();
+////            java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(waktuTransaksi);
+////            String waktu = s.format(date);
+//            
+//            System.out.println(deskripsiBarang);
+//            String sql = "INSERT INTO tb_transaksi values (null,"+kode+",'"+deskripsiBarang+"',"+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",'"+waktuTransaksi+"')";
+//            stmt.executeUpdate(sql);
+//            
+//            
+//        } catch (SQLException ex) {
+//            System.out.println(ex);
+//        }
         
-        //return deskripsi;
-        return null;
+        return deskripsi;
+//        return null;
     }
 }

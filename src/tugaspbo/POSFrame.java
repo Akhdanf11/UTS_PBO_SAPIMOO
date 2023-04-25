@@ -6,6 +6,7 @@ package tugaspbo;
 
 import java.awt.Color;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -677,11 +678,14 @@ public class POSFrame extends javax.swing.JFrame {
         xx.waktuTransaksi = tanggalTextField.getText(); 
         
         String deskripsi = "";
+        String kodeTransaksi = "";
+        String barangTransaksi = "";
+        int jumlahTransaksi =0;
         for (int i = 0; i < JumlahBelanja; i++) {
-            String kodeTransaksi = (String) daftarModel.getValueAt(i, 1);
-            String barangTransaksi = (String) daftarModel.getValueAt(i, 2);
-            int jumlahTransaksi = (int) daftarModel.getValueAt(i, 4);
-            xx.informasiBarang(kodeTransaksi, barangTransaksi, jumlahTransaksi);
+            kodeTransaksi = (String) daftarModel.getValueAt(i, 1);
+            barangTransaksi = (String) daftarModel.getValueAt(i, 2);
+            jumlahTransaksi = (int) daftarModel.getValueAt(i, 4);
+            xx.informasiBarang(barangTransaksi, jumlahTransaksi);
                        
             deskripsi = deskripsi + barangTransaksi + " x" + Integer.toString(jumlahTransaksi);
             if (i != JumlahBelanja-1) {
@@ -691,6 +695,19 @@ public class POSFrame extends javax.swing.JFrame {
         
         //System.out.println(deskripsi);
         xx.deskripsiBarang = xx.deskripsiBarang + deskripsi;
+            try {
+            Statement stmt = DBConnector.connection.createStatement();
+//            java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(waktuTransaksi);
+//            String waktu = s.format(date);
+            
+            System.out.println(xx.deskripsiBarang);
+            String sql = "INSERT INTO tb_transaksi values (null,"+kodeTransaksi+",'"+xx.deskripsiBarang+"',"+xx.totalTransaksi+","+xx.bayarTransaksi+","+xx.kembalianTransaksi+",'"+xx.waktuTransaksi+"')";
+            stmt.executeUpdate(sql);
+            
+            
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
         transaksi.add(xx);
         
         /*
