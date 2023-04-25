@@ -574,8 +574,11 @@ public class POSFrame extends javax.swing.JFrame {
            Integer.parseInt(inputcode); 
         }  catch (NumberFormatException e) {
            JOptionPane.showMessageDialog(null, "Kode barang harus berupa angka.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        } 
         
+        if(inputcode.isEmpty()){
+             JOptionPane.showMessageDialog(null, "Kode barang kosong", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
         
         Item tempItem;
         for (int i = 0; i < itemlist.size(); i++) {
@@ -605,6 +608,7 @@ public class POSFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Kode barang invalid", "Error", JOptionPane.ERROR_MESSAGE);
             } 
            
+        }
         }
     }//GEN-LAST:event_CodeTextFieldActionPerformed
 
