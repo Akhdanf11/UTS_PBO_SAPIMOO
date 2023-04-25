@@ -689,8 +689,8 @@ public class POSFrame extends javax.swing.JFrame {
             }
         }
         
-        System.out.println(deskripsi);
-        xx.deskripsiBarang = deskripsi;
+        //System.out.println(deskripsi);
+        xx.deskripsiBarang = xx.deskripsiBarang + deskripsi;
         transaksi.add(xx);
         
         /*

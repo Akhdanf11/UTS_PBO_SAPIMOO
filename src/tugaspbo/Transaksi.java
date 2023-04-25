@@ -20,7 +20,7 @@ public class Transaksi {
     public int bayarTransaksi;
     public int kembalianTransaksi;
     public String waktuTransaksi;
-    public String deskripsiBarang;
+    public String deskripsiBarang = "";
     
     public String informasiBarang(String kode, String nama, int jumlah) {
         //String deskripsi = "";
@@ -29,17 +29,17 @@ public class Transaksi {
 //        String sql = "INSERT INTO tb_barang values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",null)";
 //        ResultSet rs = stmt.executeQuery(sql);
 
-        Date date = new Date();
-        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        s.setTimeZone(TimeZone.getTimeZone("GMT+7"));  
+//        Date date = new Date();
+//        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//        s.setTimeZone(TimeZone.getTimeZone("GMT+7"));  
         
         try {
             Statement stmt = DBConnector.connection.createStatement();
 //            java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(waktuTransaksi);
-            String waktu = s.format(date);
-            // System.out.println(waktu);
+//            String waktu = s.format(date);
             
-            String sql = "INSERT INTO tb_transaksi values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",'"+waktu+"')";
+            System.out.println(deskripsiBarang);
+            String sql = "INSERT INTO tb_transaksi values (null,"+kode+",'"+deskripsiBarang+"',"+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",'"+waktuTransaksi+"')";
             stmt.executeUpdate(sql);
             
             
