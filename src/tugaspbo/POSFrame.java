@@ -676,13 +676,21 @@ public class POSFrame extends javax.swing.JFrame {
         
         xx.waktuTransaksi = tanggalTextField.getText(); 
         
+        String deskripsi = "";
         for (int i = 0; i < JumlahBelanja; i++) {
             String kodeTransaksi = (String) daftarModel.getValueAt(i, 1);
             String barangTransaksi = (String) daftarModel.getValueAt(i, 2);
             int jumlahTransaksi = (int) daftarModel.getValueAt(i, 4);
-             xx.informasiBarang(kodeTransaksi, barangTransaksi, jumlahTransaksi);
+            xx.informasiBarang(kodeTransaksi, barangTransaksi, jumlahTransaksi);
+                       
+            deskripsi = deskripsi + barangTransaksi + " x" + Integer.toString(jumlahTransaksi);
+            if (i != JumlahBelanja-1) {
+                deskripsi += ", ";
+            }
         }
         
+        System.out.println(deskripsi);
+        xx.deskripsiBarang = deskripsi;
         transaksi.add(xx);
         
         /*

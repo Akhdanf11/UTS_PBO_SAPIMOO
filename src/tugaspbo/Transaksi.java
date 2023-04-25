@@ -20,10 +20,11 @@ public class Transaksi {
     public int bayarTransaksi;
     public int kembalianTransaksi;
     public String waktuTransaksi;
+    public String deskripsiBarang;
     
     public String informasiBarang(String kode, String nama, int jumlah) {
-        String deskripsi = "";
-        deskripsi = nama + " x" + Integer.toString(jumlah) + "\n";
+        //String deskripsi = "";
+        //deskripsi = nama + " x" + Integer.toString(jumlah) + "\n";
 //        Statement stmt = DBConnector.connection.createStatement();
 //        String sql = "INSERT INTO tb_barang values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",null)";
 //        ResultSet rs = stmt.executeQuery(sql);
@@ -36,7 +37,7 @@ public class Transaksi {
             Statement stmt = DBConnector.connection.createStatement();
 //            java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(waktuTransaksi);
             String waktu = s.format(date);
-            System.out.println(waktu);
+            // System.out.println(waktu);
             
             String sql = "INSERT INTO tb_transaksi values (null,"+kode+","+totalTransaksi+","+bayarTransaksi+","+kembalianTransaksi+",'"+waktu+"')";
             stmt.executeUpdate(sql);
@@ -45,6 +46,8 @@ public class Transaksi {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return deskripsi;
+        
+        //return deskripsi;
+        return null;
     }
 }
