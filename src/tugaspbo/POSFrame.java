@@ -570,6 +570,11 @@ public class POSFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         String inputcode = CodeTextField.getText();
+        try {
+           Integer.parseInt(inputcode); 
+        }  catch (NumberFormatException e) {
+           JOptionPane.showMessageDialog(null, "Kode barang harus berupa angka.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
         
         Item tempItem;
@@ -595,8 +600,11 @@ public class POSFrame extends javax.swing.JFrame {
                 daftarModel.setValueAt(tempItem.price, tempIndex, 3);
                 daftarModel.setValueAt(1, tempIndex, 4);
                 
-            }
-        
+            } 
+            if (!tempItem.code.equals(inputcode)) {
+                JOptionPane.showMessageDialog(null, "Kode barang invalid", "Error", JOptionPane.ERROR_MESSAGE);
+            } 
+           
         }
     }//GEN-LAST:event_CodeTextFieldActionPerformed
 
@@ -616,6 +624,10 @@ public class POSFrame extends javax.swing.JFrame {
         
         float dibayar = Float.valueOf(ubahBayar);
         int dibayarInt = (int)dibayar;
+     
+        if (dibayar < totalBelanja) {
+            JOptionPane.showMessageDialog(null, "Jumlah pembayaran kurang dari total belanja.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         
         int kembalian = dibayarInt - totalBelanjaInt;
         if (kembalian < 0){
@@ -624,6 +636,8 @@ public class POSFrame extends javax.swing.JFrame {
             KembalianTextField.setForeground(Color.green);
         
         KembalianTextField.setText(String.format("%,d",kembalian));
+        
+       
     }//GEN-LAST:event_BayarTextFieldActionPerformed
 
     private void BayarTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BayarTextFieldKeyTyped
