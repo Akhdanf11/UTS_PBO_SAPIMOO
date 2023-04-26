@@ -78,6 +78,10 @@ public class POSFrame extends javax.swing.JFrame {
         s.setTimeZone(TimeZone.getTimeZone("GMT+7"));      
         tanggalTextField.setText(s.format(date));
         
+        //Textfield bayar disabled dikarenakan blm ada input sesuatu
+        BayarTextField.enable(false);
+        BayarTextField.setBackground(Color.lightGray);
+        
         daftarModel = daftarTable.getModel();
         daftarModel.addTableModelListener(new TableModelListener()
                 {
@@ -189,12 +193,25 @@ public class POSFrame extends javax.swing.JFrame {
         });
 
         NameTextField.setEditable(false);
+        NameTextField.setBackground(new java.awt.Color(204, 204, 204));
         NameTextField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        NameTextField.setForeground(new java.awt.Color(255, 255, 255));
+        NameTextField.setCaretColor(new java.awt.Color(51, 51, 51));
+        NameTextField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        NameTextField.setEnabled(false);
         NameTextField.setMinimumSize(new java.awt.Dimension(84, 40));
+        NameTextField.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        NameTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
 
         PriceTextField.setEditable(false);
+        PriceTextField.setBackground(new java.awt.Color(204, 204, 204));
         PriceTextField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        PriceTextField.setCaretColor(new java.awt.Color(51, 51, 51));
+        PriceTextField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        PriceTextField.setEnabled(false);
         PriceTextField.setMinimumSize(new java.awt.Dimension(84, 40));
+        PriceTextField.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        PriceTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
 
         jLabel4.setFont(new java.awt.Font("Stencil", 0, 48)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -232,14 +249,27 @@ public class POSFrame extends javax.swing.JFrame {
         jLabel8.setText("Kembalian");
 
         KembalianTextField.setEditable(false);
+        KembalianTextField.setBackground(new java.awt.Color(204, 204, 204));
         KembalianTextField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        KembalianTextField.setCaretColor(new java.awt.Color(51, 51, 51));
+        KembalianTextField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        KembalianTextField.setEnabled(false);
         KembalianTextField.setMinimumSize(new java.awt.Dimension(84, 40));
+        KembalianTextField.setSelectedTextColor(new java.awt.Color(51, 51, 51));
 
         totalBelanjaTextField.setEditable(false);
+        totalBelanjaTextField.setBackground(new java.awt.Color(204, 204, 204));
         totalBelanjaTextField.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        totalBelanjaTextField.setCaretColor(new java.awt.Color(51, 51, 51));
+        totalBelanjaTextField.setDisabledTextColor(new java.awt.Color(102, 102, 102));
+        totalBelanjaTextField.setEnabled(false);
         totalBelanjaTextField.setMinimumSize(new java.awt.Dimension(84, 40));
+        totalBelanjaTextField.setSelectedTextColor(new java.awt.Color(51, 51, 51));
+        totalBelanjaTextField.setSelectionColor(new java.awt.Color(51, 51, 51));
 
-        bayarButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        bayarButton.setBackground(new java.awt.Color(0, 153, 0));
+        bayarButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        bayarButton.setForeground(new java.awt.Color(255, 255, 255));
         bayarButton.setText("BAYAR");
         bayarButton.setDefaultCapable(false);
         bayarButton.setFocusPainted(false);
@@ -258,10 +288,6 @@ public class POSFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(156, 156, 156)
-                .addComponent(bayarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -318,7 +344,10 @@ public class POSFrame extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tanggalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(tanggalTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(bayarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -346,7 +375,7 @@ public class POSFrame extends javax.swing.JFrame {
                     .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(totalBelanjaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -364,9 +393,9 @@ public class POSFrame extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(30, 30, 30)
                 .addComponent(bayarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+                .addGap(45, 45, 45))
         );
 
         daftarTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -582,34 +611,40 @@ public class POSFrame extends javax.swing.JFrame {
         } else {
         
         Item tempItem;
-        for (int i = 0; i < itemlist.size(); i++) {
-            
-            tempItem= itemlist.get(i);
-            
-            //WARNING : dimulai dari index 0
-            int tempIndex = 0;
-            
-            if (tempItem.code.equals(inputcode)) {
-                
-                tempIndex = JumlahBelanja;
-                JumlahBelanja++;
-                System.out.println("Item Found");
-                i = itemlist.size();
-                NameTextField.setText(tempItem.name);
-                PriceTextField.setText(Float.toString(tempItem.price));
-                
-                daftarModel.setValueAt(JumlahBelanja, tempIndex, 0);
-                daftarModel.setValueAt(inputcode, tempIndex, 1);
-                daftarModel.setValueAt(tempItem.name, tempIndex, 2);
-                daftarModel.setValueAt(tempItem.price, tempIndex, 3);
-                daftarModel.setValueAt(1, tempIndex, 4);
-                
-            } 
-            if (!tempItem.code.equals(inputcode)) {
+        boolean search = false;
+            for (int i = 0; i < itemlist.size(); i++) {
+
+                tempItem= itemlist.get(i);
+
+                //WARNING : dimulai dari index 0
+                int tempIndex = 0;
+
+
+                if (tempItem.code.equals(inputcode)) {
+
+                    tempIndex = JumlahBelanja;
+                    JumlahBelanja++;
+                    System.out.println("Item Found");
+                    i = itemlist.size();
+                    NameTextField.setText(tempItem.name);
+                    PriceTextField.setText(Float.toString(tempItem.price));
+
+                    daftarModel.setValueAt(JumlahBelanja, tempIndex, 0);
+                    daftarModel.setValueAt(inputcode, tempIndex, 1);
+                    daftarModel.setValueAt(tempItem.name, tempIndex, 2);
+                    daftarModel.setValueAt(tempItem.price, tempIndex, 3);
+                    daftarModel.setValueAt(1, tempIndex, 4);
+                    search = true;
+                } 
+
+            }
+            if (!search) {
                 JOptionPane.showMessageDialog(null, "Kode barang invalid", "Error", JOptionPane.ERROR_MESSAGE);
             } 
-           
-        }
+            
+            //mengaktifkan kembali 
+            BayarTextField.enable(true);
+            BayarTextField.setBackground(Color.white);
         }
     }//GEN-LAST:event_CodeTextFieldActionPerformed
 
@@ -632,13 +667,12 @@ public class POSFrame extends javax.swing.JFrame {
      
         if (dibayar < totalBelanja) {
             JOptionPane.showMessageDialog(null, "Jumlah pembayaran kurang dari total belanja.", "Error", JOptionPane.ERROR_MESSAGE);
+             KembalianTextField.setDisabledTextColor(Color.red);
+        }else{
+            KembalianTextField.setDisabledTextColor(Color.black);
         }
         
         int kembalian = dibayarInt - totalBelanjaInt;
-        if (kembalian < 0){
-            KembalianTextField.setForeground(Color.red);
-        }else
-            KembalianTextField.setForeground(Color.green);
         
         KembalianTextField.setText(String.format("%,d",kembalian));
         
@@ -703,7 +737,13 @@ public class POSFrame extends javax.swing.JFrame {
             System.out.println(xx.deskripsiBarang);
             String sql = "INSERT INTO tb_transaksi values (null,"+kodeTransaksi+",'"+xx.deskripsiBarang+"',"+xx.totalTransaksi+","+xx.bayarTransaksi+","+xx.kembalianTransaksi+",'"+xx.waktuTransaksi+"')";
             stmt.executeUpdate(sql);
-            
+            //mengosongkan tampilan jika sukses transaksi
+            CodeTextField.setText("");
+            NameTextField.setText("");
+            PriceTextField.setText("");
+            totalBelanjaTextField.setText("");
+            BayarTextField.setText("");
+            KembalianTextField.setText("");
             
         } catch (SQLException ex) {
             System.out.println(ex);
