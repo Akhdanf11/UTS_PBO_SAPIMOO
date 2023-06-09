@@ -4,10 +4,20 @@
  */
 package posprojectuts;
 
+import java.time.LocalDateTime;
+
 /**
  *
  * @author LENOVO
  */
-public class PembayaranInterface {
+
+public interface PembayaranInterface {
+    float getTotalHarga();
+    void setTotalHarga(float totalHarga);
     
+    String getWaktuPembayaran();
+    void setWaktuPembayaran(String waktuPembayaran);
+    
+    int getIDPembayaran();
+    void setIDPembayaran(int IDPembayaram);
 }
