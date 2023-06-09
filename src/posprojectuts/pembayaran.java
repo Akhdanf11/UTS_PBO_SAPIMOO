@@ -4,19 +4,135 @@
  */
 package posprojectuts;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import java.io.File;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
 /**
  *
  * @author LENOVO
  */
 public class Pembayaran extends javax.swing.JFrame {
 
+    private float totalHarga;
+    private String jenisBarang;
+
     /**
-     * Creates new form pembayaran
+     * Creates new form Pembayaran
      */
     public Pembayaran() {
         initComponents();
+        DBConnector.initDBConnection();
+        Timer timer = new Timer(1000, e -> {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            String formattedDate = now.format(formatter);
+            waktuPembayaran.setText(formattedDate);
+        });
+        timer.start();
+        
+        //set ID Pembayaran
+//        try {
+//            Statement stmt = DBConnector.connection.createStatement();
+//            String sql = "SELECT COUNT(*) FROM pembayaran as jumlahData";
+//            ResultSet rs = stmt.executeQuery(sql);
+//            rs.next();
+//            int jumlah = rs.getInt("jumlahData");
+//            // System.out.println(JumlahData);
+//            int intID = jumlah+1;
+//            String stringID = String.valueOf(intID);
+//
+//            idPembayaranTextField.setText(stringID);   
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(this, ex);
+//              
+//        }
     }
+    
+    public Pembayaran(float totalHarga, String jenisBarang) throws WriterException {
+        this.totalHarga = totalHarga;
+        this.jenisBarang = jenisBarang;
+        int totalHargaInt = (int)totalHarga;
+        
+        DBConnector.initDBConnection();
+        
+        totalHargaTextField.setText(String.format("%,d",totalHargaInt));
+        
+        try {
+            String qrCodeString = "ID Pembayaran  dengan Total Harga : telah berhasil dibayar!";
+            String filePath = "D:\\kuliah\\sem 4\\pbo\\sapi moo\\UTS\\UTS_PBO_SAPIMOO\\src\\qrCode.png"; 
+            String charset = "UTF-8";
+            
+            Map <EncodeHintType, ErrorCorrectionLevel > hintMap = new HashMap < EncodeHintType, ErrorCorrectionLevel>();
+            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+            BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeString.getBytes(charset), charset),
+                    BarcodeFormat.QR_CODE, 200, 200, hintMap);
+            MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath.lastIndexOf('.') + 1), new File(filePath));
+            System.out.println("QR Code berhasil dibuat");
+            ImageIcon qrIcon = new ImageIcon("D:\\kuliah\\sem 4\\pbo\\sapi moo\\UTS\\UTS_PBO_SAPIMOO\\src\\qr.png");
+            qrLabel.setIcon(qrIcon);
+           
+        } catch (Exception e) {
+            System.err.println(e);
+        }
 
+        
+        
+    }
+    
+    private void generateQRCode() throws WriterException {
+//        String qrCodeString = "ID Pembayaran " + idPembayaranTextField.getText() + " dengan Total Harga : " + totalHargaTextField.getText() 
+//                                + "telah berhasil dibayar!";
+        
+        
+        
+        
+        
+//        try {
+//                QRCodeWriter qrCodeWriter = new QRCodeWriter();
+//                BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeString, BarcodeFormat.QR_CODE, size, size);
+//
+//                BufferedImage bufferedImage = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
+//                bufferedImage.createGraphics();
+//                
+//                for (int x = 0; x < size; x++) {
+//                    for (int y = 0; y < size; y++) {
+//                        int grayValue = (bitMatrix.get(x, y) ? 0 : 1) & 0xff;
+//                        bufferedImage.setRGB(x, y, (grayValue == 0 ? 0 : 0xFFFFFF));
+//                    }
+//                }
+//                
+//                Image scaledImage = bufferedImage.getScaledInstance(QRIS.getWidth(), QRIS.getHeight(), Image.SCALE_SMOOTH);
+//                QRIS.setIcon(new ImageIcon(scaledImage));
+//
+//                File qrFile = new File(filePath);
+//                ImageIO.write(bufferedImage, fileType, qrFile);
+//        } catch (WriterException | IOException ex) {
+//                    ex.printStackTrace();   
+//        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,13 +142,13 @@ public class Pembayaran extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        JPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        idPembayaranTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        totalHargaTextField = new javax.swing.JTextField();
+        waktuPembayaran = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel6 = new javax.swing.JPanel();
         jTextField4 = new javax.swing.JTextField();
@@ -41,17 +157,20 @@ public class Pembayaran extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        qrLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(807, 464));
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+        JPanel1.setBackground(new java.awt.Color(102, 102, 102));
 
         jLabel1.setFont(new java.awt.Font("Montserrat ExtraBold", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("PEMBAYARAN");
+
+        idPembayaranTextField.setEditable(false);
 
         jLabel2.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -61,48 +180,48 @@ public class Pembayaran extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("TOTAL :");
 
-        jTextField2.setToolTipText("");
+        totalHargaTextField.setEditable(false);
+        totalHargaTextField.setToolTipText("");
 
-        jTextField3.setBackground(new java.awt.Color(102, 102, 102));
-        jTextField3.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField3.setBorder(null);
-        jTextField3.setEnabled(false);
+        waktuPembayaran.setBackground(new java.awt.Color(102, 102, 102));
+        waktuPembayaran.setFont(new java.awt.Font("Tw Cen MT", 1, 15)); // NOI18N
+        waktuPembayaran.setForeground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(295, 295, 295)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout JPanel1Layout = new javax.swing.GroupLayout(JPanel1);
+        JPanel1.setLayout(JPanel1Layout);
+        JPanel1Layout.setHorizontalGroup(
+            JPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPanel1Layout.createSequentialGroup()
+                .addGroup(JPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JPanel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(idPembayaranTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(43, 43, 43)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addComponent(totalHargaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81)
+                        .addComponent(waktuPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JPanel1Layout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(jLabel1)))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        JPanel1Layout.setVerticalGroup(
+            JPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(JPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(idPembayaranTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                    .addComponent(totalHargaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(waktuPembayaran, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel5.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
@@ -126,7 +245,7 @@ public class Pembayaran extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(317, Short.MAX_VALUE))
+                .addContainerGap(327, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,7 +267,7 @@ public class Pembayaran extends javax.swing.JFrame {
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 785, Short.MAX_VALUE)
+            .addGap(0, 795, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,15 +276,23 @@ public class Pembayaran extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Debit", jPanel7);
 
+        qrLabel.setBackground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 785, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(214, 214, 214)
+                .addComponent(qrLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(340, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(qrLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("QRIS", jPanel5);
@@ -178,7 +305,7 @@ public class Pembayaran extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1)
@@ -188,7 +315,7 @@ public class Pembayaran extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(JPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -233,20 +360,21 @@ public class Pembayaran extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel JPanel1;
+    private javax.swing.JTextField idPembayaranTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
+    private javax.swing.JLabel qrLabel;
+    private javax.swing.JTextField totalHargaTextField;
+    private javax.swing.JLabel waktuPembayaran;
     // End of variables declaration//GEN-END:variables
 }
