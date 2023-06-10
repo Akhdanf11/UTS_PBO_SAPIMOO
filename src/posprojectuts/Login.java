@@ -178,7 +178,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here
         try{
                         Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/2023_db_pod", "root", "");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost/2023_db_pos", "root", "");
             
             String username = txnama.getText();
             String password = txpassword.getText();
