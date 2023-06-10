@@ -42,7 +42,6 @@ public class POSFrame extends javax.swing.JFrame {
         
 //        daftarBarang = new ArrayList<Barang>();
         Barang.loadBarangFromDB();
-        Makanan.loadBarangFromDB();
         Pulsa.loadBarangFromDB();
         Token.loadBarangFromDB();
         
@@ -106,13 +105,13 @@ public class POSFrame extends javax.swing.JFrame {
 private void kodetransaksi(){
         try {
             Statement stmt = DBConnector.connection.createStatement();
-            String sql = "SELECT COUNT(*) as jumlah_transaksi FROM transaksi";
+            String sql = "SELECT COUNT(*) as jumlah_pembayaran FROM pembayaran";
             ResultSet rs = stmt.executeQuery(sql);
             rs.next();
-            int JumlahData = rs.getInt("jumlah_transaksi");
+            int JumlahData = rs.getInt("jumlah_pembayaran");
             System.out.println(JumlahData);
-            int idtransaksi = JumlahData+2;
-            String idTransString = String.format("000%03d", idtransaksi);
+            int idtransaksi = JumlahData+1;
+            String idTransString = String.format("CASHIER-%03d", idtransaksi);
             id_transaksi.setText(idTransString);
         } catch (SQLException ex) {
             Logger.getLogger(POSFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,7 +132,6 @@ private void kodetransaksi(){
         jpanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -148,8 +146,6 @@ private void kodetransaksi(){
         NoTelpTextField = new javax.swing.JTextField();
         NoMeteranTextField = new javax.swing.JTextField();
         totalBelanjaTextField = new javax.swing.JTextField();
-        dibayarTextField = new javax.swing.JTextField();
-        kembalianTextField = new javax.swing.JTextField();
         btn_bayar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         daftarTable = new javax.swing.JTable();
@@ -171,10 +167,6 @@ private void kodetransaksi(){
         jLabel6.setFont(new java.awt.Font("Century", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Kembalian");
-
-        jLabel5.setFont(new java.awt.Font("Century", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Jumlah yang Dibayar");
 
         jLabel4.setFont(new java.awt.Font("Century", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -259,27 +251,6 @@ private void kodetransaksi(){
         totalBelanjaTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 totalBelanjaTextFieldActionPerformed(evt);
-            }
-        });
-
-        dibayarTextField.setFont(new java.awt.Font("Century", 0, 18)); // NOI18N
-        dibayarTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bayar(evt);
-            }
-        });
-        dibayarTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                dibayarTextFieldKeyReleased(evt);
-            }
-        });
-
-        kembalianTextField.setEditable(false);
-        kembalianTextField.setBackground(new java.awt.Color(204, 204, 204));
-        kembalianTextField.setFont(new java.awt.Font("Century", 0, 18)); // NOI18N
-        kembalianTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kembalianTextFieldActionPerformed(evt);
             }
         });
 
@@ -455,15 +426,12 @@ private void kodetransaksi(){
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel5)
                             .addComponent(jLabel6))
-                        .addGap(70, 70, 70)
+                        .addGap(138, 138, 138)
                         .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(hargaTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btn_bayar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
                             .addComponent(totalBelanjaTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dibayarTextField, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(kembalianTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(NoMeteranTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(NoTelpTextField, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(namaTextField)))
@@ -481,7 +449,7 @@ private void kodetransaksi(){
                         .addGap(77, 77, 77)
                         .addComponent(jScrollPane1))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 336, Short.MAX_VALUE)
                         .addComponent(jLabel11)
                         .addGap(266, 266, 266)
                         .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -492,20 +460,17 @@ private void kodetransaksi(){
             .addGroup(jpanel1Layout.createSequentialGroup()
                 .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpanel1Layout.createSequentialGroup()
-                        .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpanel1Layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanel1Layout.createSequentialGroup()
-                                .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addGap(23, 23, 23)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txTanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addGap(23, 23, 23)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 411, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jpanel1Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(id_transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(97, 97, 97)
+                        .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(id_transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jpanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jpanel1Layout.createSequentialGroup()
@@ -530,15 +495,10 @@ private void kodetransaksi(){
                                     .addComponent(jLabel10))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(totalBelanjaTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(dibayarTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(kembalianTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(77, 77, 77))
                             .addGroup(jpanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addGap(64, 64, 64)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(btn_bayar)))
@@ -639,108 +599,19 @@ private void kodetransaksi(){
     }//GEN-LAST:event_kodeTextFieldActionPerformed
 
     private void btn_bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_bayarActionPerformed
-        if (beliToken){
-            Random rand = new Random(); 
-            int angka1 = rand.nextInt(10);
-            int angka2 = rand.nextInt(10);
-            int angka3 = rand.nextInt(10);
-            int angka4 = rand.nextInt(10);
-            int angka5 = rand.nextInt(10);
-            int angka6 = rand.nextInt(10);
-            int angka7 = rand.nextInt(10);
-            int angka8 = rand.nextInt(10);
-            int angka9 = rand.nextInt(10);
-            int angka10 = rand.nextInt(10);
-            int angka11 = rand.nextInt(10);
-            int angka12 = rand.nextInt(10);
-            int angka13 = rand.nextInt(10);
-            int angka14 = rand.nextInt(10);
-            int angka15 = rand.nextInt(10);
-            int angka16 = rand.nextInt(10);
-            int angka17 = rand.nextInt(10);
-            int angka18 = rand.nextInt(10);
-            int angka19 = rand.nextInt(10);
-            int angka20 = rand.nextInt(10);
-            
-            Token.token = String.valueOf(angka1)+String.valueOf(angka2)+String.valueOf(angka3)+String.valueOf(angka4)+String.valueOf(angka5)+String.valueOf(angka6)+String.valueOf(angka7)+String.valueOf(angka8)+String.valueOf(angka9)+String.valueOf(angka10)+String.valueOf(angka11)+String.valueOf(angka12)+String.valueOf(angka13)+String.valueOf(angka14)+String.valueOf(angka15)+String.valueOf(angka16)+String.valueOf(angka17)+String.valueOf(angka18)+String.valueOf(angka19)+String.valueOf(angka20);
-            
-            JOptionPane.showMessageDialog(null, "Token = "+Token.token);
-            beliToken = false;
-        }
+        String totalHarga = totalBelanjaTextField.getText();
+        String stringTotalBelanja = totalHarga.replace(",", "");
+        float totalHargaFloat = Float.parseFloat(stringTotalBelanja);
         
-        String transaksitext = id_transaksi.getText();
-        int inttransaksi = Integer.parseInt(transaksitext.substring(2));
-             
-        String totalBelanja = totalBelanjaTextField.getText();
-        totalBelanja =totalBelanja.replace(",","");
-        float TotalBelanja = Float.parseFloat(totalBelanja);
-
+        boolean ambilToken = beliToken;
         
-        Transaksi trans = new Transaksi(inttransaksi, TotalBelanja);
-        
-        for(int i=0; i<jumlahBelanja;i++){
-            int id_barang = Integer.parseInt(daftarModel.getValueAt(i, 1).toString());
-            String nama_barang = daftarModel.getValueAt(i,2).toString();
-            float harga_satuan = Float.parseFloat(daftarModel.getValueAt(i,3).toString());
-            int jumlah_barang = Integer.parseInt(daftarModel.getValueAt(i,4).toString());
-            float harga_total = Float.parseFloat(daftarModel.getValueAt(i,8).toString());
-            Transaksi.addItem(new Transaksi.rincian_transaksi(id_barang, nama_barang, harga_satuan, jumlah_barang, harga_total));
-        }
-        try {
-        // Simpan data ke dalam database
-        Transaksi.simpanDatabase();
-        // Jika berhasil, tampilkan pesan sukses
-        JOptionPane.showMessageDialog(null, "Data transaksi berhasil disimpan!");
+        Pembayaran frame = new Pembayaran(totalHargaFloat, ambilToken);
+        frame.setVisible(true);
         this.dispose();
-        new POSFrame().setVisible(true);
         kodetransaksi();
-       
-    } catch (SQLException ex) {
-        // Jika terjadi error, tampilkan pesan error
-        JOptionPane.showMessageDialog(null, "Terjadi kesalahan saat menyimpan data: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
         
-    jumlahBelanja = 0;
-    Transaksi.listItem.clear();
+        jumlahBelanja = 0;
     }//GEN-LAST:event_btn_bayarActionPerformed
-
-    private void kembalianTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kembalianTextFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_kembalianTextFieldActionPerformed
-
-    private void dibayarTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_dibayarTextFieldKeyReleased
-        // TODO add your handling code here:
-        
-        String dibayarString = dibayarTextField.getText();
-        
-        int dibayarInput = Integer.valueOf(dibayarString);
-        
-    }//GEN-LAST:event_dibayarTextFieldKeyReleased
-
-    private void bayar(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bayar
-try {
-    String totalbelanja = totalBelanjaTextField.getText();
-    float  totalBelanja = Float.valueOf(totalbelanja);
-    int totalBelanjaInt = (int)totalBelanja;
-    
-    String bayar = dibayarTextField.getText();
-    float dibayar = Float.valueOf(bayar);
-    int dibayarInt = (int)dibayar;
-    
-    int kembalianInt = dibayarInt - totalBelanjaInt;
-    kembalianTextField.setText(String.format("%,d", kembalianInt));
-    if (dibayarInt < totalBelanjaInt) {
-        throw new Exception("Jumlah yang dibayar kurang dari total belanja!");
-    }
-        Statement stmt = DBConnector.connection.createStatement();
-        String sql = "INSERT INTO keuangan(total, dibayar, kembalian) VALUES('"+totalBelanjaInt+"','"+dibayarInt+"','"+kembalianInt+"')";
-        stmt.execute(sql);
-} catch (NumberFormatException e) {
-    JOptionPane.showMessageDialog(null, "Masukan harus berupa angka!");
-} catch (Exception e) {
-    JOptionPane.showMessageDialog(null, e.getMessage());
-}
-    }//GEN-LAST:event_bayar
 
     private void totalBelanjaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalBelanjaTextFieldActionPerformed
         // TODO add your handling code here:
@@ -834,7 +705,6 @@ try {
     private javax.swing.JTextField NoTelpTextField;
     private javax.swing.JButton btn_bayar;
     private javax.swing.JTable daftarTable;
-    private javax.swing.JTextField dibayarTextField;
     private javax.swing.JTextField hargaTextField;
     private javax.swing.JTextField id_transaksi;
     private javax.swing.JLabel jLabel1;
@@ -843,13 +713,11 @@ try {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel jpanel1;
-    private javax.swing.JTextField kembalianTextField;
     private javax.swing.JTextField kodeTextField;
     private javax.swing.JTextField namaTextField;
     private javax.swing.JTextField totalBelanjaTextField;

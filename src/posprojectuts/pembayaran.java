@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -40,7 +41,7 @@ import javax.swing.JLabel;
 public class Pembayaran extends javax.swing.JFrame {
 
     private float totalHarga;
-    private String jenisBarang;
+    private boolean beliToken;
 
     /**
      * Creates new form Pembayaran
@@ -74,40 +75,20 @@ public class Pembayaran extends javax.swing.JFrame {
 //        }
     }
     
-    public Pembayaran(float totalHarga, String jenisBarang) {
+    public Pembayaran(float totalHarga, boolean beliToken) {
         this.totalHarga = totalHarga;
-        this.jenisBarang = jenisBarang;
+        this.beliToken = beliToken;
         int totalHargaInt = (int)totalHarga;
         
         DBConnector.initDBConnection();
         
         totalHargaTextField.setText(String.format("%,d",totalHargaInt));
+        
+        generateIDPembayaran();
         // String qrCodeString = "ID Pembayaran " + idPembayaranTextField.getText() + " dengan Total Harga : " + totalHargaTextField.getText() 
         //                                    + "telah berhasil dibayar!";
         String qrCodeString = "ID Pembayaran  dengan Total Harga : telah berhasil dibayar!";
         setQRCodeImage(qrCodeString, qrLabel, 217, 185);
-        
-//        try {
-//            //        String qrCodeString = "ID Pembayaran " + idPembayaranTextField.getText() + " dengan Total Harga : " + totalHargaTextField.getText() 
-//            //                                + "telah berhasil dibayar!";
-//            String qrCodeString = "ID Pembayaran  dengan Total Harga : telah berhasil dibayar!";
-//            String filePath = "D:\\kuliah\\sem 4\\pbo\\sapi moo\\UTS\\UTS_PBO_SAPIMOO\\src\\qrCode.png"; 
-//            String charset = "UTF-8";
-//            
-//            Map <EncodeHintType, ErrorCorrectionLevel > hintMap = new HashMap < EncodeHintType, ErrorCorrectionLevel>();
-//            hintMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
-//            BitMatrix matrix = new MultiFormatWriter().encode(new String(qrCodeString.getBytes(charset), charset),
-//                    BarcodeFormat.QR_CODE, 200, 200, hintMap);
-//            MatrixToImageWriter.writeToFile(matrix, filePath.substring(filePath.lastIndexOf('.') + 1), new File(filePath));
-//            
-//            System.out.println("QR Code berhasil dibuat");
-//            ImageIcon qrIcon = new ImageIcon("D:\\kuliah\\sem 4\\pbo\\sapi moo\\UTS\\UTS_PBO_SAPIMOO\\src\\kokomi.jpg");
-//            qrLabel.setIcon(qrIcon);
-//           
-//        } catch (Exception e) {
-//            System.err.println(e);
-//        }
-
     }
     
     public static void setQRCodeImage(String qrText, JLabel label, int width, int height) {
@@ -147,13 +128,39 @@ public class Pembayaran extends javax.swing.JFrame {
             int jumlahData = rs.getInt("jumlahData");
             System.out.println(jumlahData);
             int GeneralID = jumlahData+1;
-            String idTransString = String.format("CASHIER-%03d", GeneralID);
+            String idTransString = String.format("PAY-%03d", GeneralID);
 
             idPembayaranTextField.setText(idTransString);   
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
               
         }
+    }
+    
+    public void generateToken() {
+        Random rand = new Random(); 
+            int angka1 = rand.nextInt(10);
+            int angka2 = rand.nextInt(10);
+            int angka3 = rand.nextInt(10);
+            int angka4 = rand.nextInt(10);
+            int angka5 = rand.nextInt(10);
+            int angka6 = rand.nextInt(10);
+            int angka7 = rand.nextInt(10);
+            int angka8 = rand.nextInt(10);
+            int angka9 = rand.nextInt(10);
+            int angka10 = rand.nextInt(10);
+            int angka11 = rand.nextInt(10);
+            int angka12 = rand.nextInt(10);
+            int angka13 = rand.nextInt(10);
+            int angka14 = rand.nextInt(10);
+            int angka15 = rand.nextInt(10);
+            int angka16 = rand.nextInt(10);
+            int angka17 = rand.nextInt(10);
+            int angka18 = rand.nextInt(10);
+            int angka19 = rand.nextInt(10);
+            int angka20 = rand.nextInt(10);
+            
+            String nomorToken = String.valueOf(angka1)+String.valueOf(angka2)+String.valueOf(angka3)+String.valueOf(angka4)+String.valueOf(angka5)+String.valueOf(angka6)+String.valueOf(angka7)+String.valueOf(angka8)+String.valueOf(angka9)+String.valueOf(angka10)+String.valueOf(angka11)+String.valueOf(angka12)+String.valueOf(angka13)+String.valueOf(angka14)+String.valueOf(angka15)+String.valueOf(angka16)+String.valueOf(angka17)+String.valueOf(angka18)+String.valueOf(angka19)+String.valueOf(angka20);
     }
     
     /**
@@ -275,7 +282,7 @@ public class Pembayaran extends javax.swing.JFrame {
 
         kembalianTextField.setEditable(false);
 
-        kasBayar.setBackground(new java.awt.Color(51, 51, 51));
+        kasBayar.setBackground(new java.awt.Color(0, 0, 0));
         kasBayar.setFont(new java.awt.Font("Tw Cen MT", 1, 16)); // NOI18N
         kasBayar.setForeground(new java.awt.Color(255, 255, 255));
         kasBayar.setText("BAYAR");
@@ -395,7 +402,7 @@ public class Pembayaran extends javax.swing.JFrame {
 
         qrLabel.setBackground(new java.awt.Color(51, 51, 51));
 
-        qrSubmitBtn.setBackground(new java.awt.Color(51, 51, 51));
+        qrSubmitBtn.setBackground(new java.awt.Color(0, 0, 0));
         qrSubmitBtn.setFont(new java.awt.Font("Tw Cen MT", 1, 16)); // NOI18N
         qrSubmitBtn.setForeground(new java.awt.Color(255, 255, 255));
         qrSubmitBtn.setText("SUBMIT");
@@ -459,43 +466,42 @@ public class Pembayaran extends javax.swing.JFrame {
 
     private void qrSubmitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qrSubmitBtnActionPerformed
         // TODO add your handling code here:
-//        QRIS qris = new QRIS();
-//
-//        String totalHargaString = totalHargaTextField.getText();
-//        totalHargaString = totalHargaString.replace(",", "");
-//        float totalHargaFloat = Float.parseFloat(totalHargaString);
-//        qris.setTotalHarga(totalHargaFloat);
-//
-//        String waktuPembayaran = waktuPembayaranTextField.getText();
-//        qris.setWaktuPembayaran(waktuPembayaran);
-//
-//        String IDPembayaran = idPembayaranTextField.getText();
-//        String formattedOutput = IDPembayaran.substring(2);
-//        int result = Integer.parseInt(formattedOutput);
-//        qris.setIDPembayaran(result);
-//
-//        String jenis = jenisPembelian.substring(0,2);
-//
-//        if(jenis.equals("PL")){
-//            JOptionPane.showMessageDialog(this,"Pulsa Telah Terkirim");
-//        } else if(jenis.equals("TN")){
-//            TokenFrame frame = new TokenFrame();
-//            frame.setVisible(true);
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
-//
-//        }
-//
-//        try {
-//            qris.simpanDatabase();
-//            generateIDPembayaran();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(Pembayaran.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        MainWindow frame = new MainWindow();
-//        frame.setVisible(true);
-//        this.dispose();
+        QRIS qris = new QRIS();
+
+        String totalHargaString = totalHargaTextField.getText();
+        totalHargaString = totalHargaString.replace(",", "");
+        float totalHargaFloat = Float.parseFloat(totalHargaString);
+        qris.setTotalHarga(totalHargaFloat);
+
+        String waktuPembayaran = waktuPembayaranTextField.getText();
+        qris.setWaktuPembayaran(waktuPembayaran);
+
+        String IDPembayaran = idPembayaranTextField.getText();
+        String formattedOutput = IDPembayaran.substring(2);
+        int result = Integer.parseInt(formattedOutput);
+        qris.setIDPembayaran(result);
+
+        boolean submitToken = beliToken;
+
+        if(submitToken){
+            JOptionPane.showMessageDialog(null, "Pembayaran Berhasil. Nomor Token : "+Token.token);
+            beliToken = false;
+        } 
+        else {
+            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
+
+        }
+
+        try {
+            qris.simpanDatabase();
+            generateIDPembayaran();
+        } catch (SQLException ex) {
+            Logger.getLogger(Pembayaran.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        POSFrame frame = new POSFrame();
+        frame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_qrSubmitBtnActionPerformed
 
     private void kasTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kasTextFieldActionPerformed
@@ -556,17 +562,16 @@ public class Pembayaran extends javax.swing.JFrame {
         int idInt = Integer.parseInt(idString);
         kas.setIDPembayaran(idInt);
 
-        String jenis = jenisBarang;
         
-        if(jenis.equals("Pulsa")){
-            JOptionPane.showMessageDialog(this,"Pulsa Telah Terkirim");
-        } else if(jenis.equals("Token")){
-//            beliTokenFrame frame = new beliTokenFrame();
-//            frame.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
-
-        }
+//        if(jenis.equals("Pulsa")){
+//            JOptionPane.showMessageDialog(this,"Pulsa Telah Terkirim");
+//        } else if(jenis.equals("Token")){
+////            beliTokenFrame frame = new beliTokenFrame();
+////            frame.setVisible(true);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
+//
+//        }
 
         try {
             kas.simpanDatabase();
@@ -607,17 +612,17 @@ public class Pembayaran extends javax.swing.JFrame {
         int result = Integer.parseInt(formattedOutput);
         debit.setIDPembayaran(result);
         
-        String jenis = jenisBarang.substring(0,2);
+//        String jenis = jenisBarang.substring(0,2);
         
-       if(jenis.equals("PL")){
-            JOptionPane.showMessageDialog(this,"Pulsa Telah Terkirim");
-        } else if(jenis.equals("TN")){
-            token frame = new token();
-            frame.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
-           
-        }
+//       if(jenis.equals("PL")){
+//            JOptionPane.showMessageDialog(this,"Pulsa Telah Terkirim");
+//        } else if(jenis.equals("TN")){
+//            token frame = new token();
+//            frame.setVisible(true);
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
+//           
+//        }
 
         try {
             debit.simpanDatabase();
