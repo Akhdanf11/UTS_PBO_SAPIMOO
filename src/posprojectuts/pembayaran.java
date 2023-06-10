@@ -180,6 +180,11 @@ public class Pembayaran extends javax.swing.JFrame {
         kembalianTextField = new javax.swing.JTextField();
         kasBayar = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        bankTextField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        cardnumberTextField = new javax.swing.JTextField();
+        debitBayar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         qrLabel = new javax.swing.JLabel();
         qrSubmitBtn = new javax.swing.JButton();
@@ -298,7 +303,7 @@ public class Pembayaran extends javax.swing.JFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(348, 348, 348)
                         .addComponent(kasBayar)))
-                .addContainerGap(326, Short.MAX_VALUE))
+                .addContainerGap(342, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,15 +323,70 @@ public class Pembayaran extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Kas", jPanel6);
 
+        jLabel7.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel7.setText("BANK :");
+
+        bankTextField.setToolTipText("");
+        bankTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bankTextFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        jLabel8.setText("CARD NUMBER :");
+
+        cardnumberTextField.setToolTipText("");
+        cardnumberTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cardnumberTextFieldActionPerformed(evt);
+            }
+        });
+
+        debitBayar.setBackground(new java.awt.Color(0, 0, 0));
+        debitBayar.setFont(new java.awt.Font("Tw Cen MT", 1, 18)); // NOI18N
+        debitBayar.setForeground(new java.awt.Color(255, 255, 255));
+        debitBayar.setText("BAYAR");
+        debitBayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                debitBayarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 794, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(188, 188, 188)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(bankTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                            .addComponent(cardnumberTextField)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(350, 350, 350)
+                        .addComponent(debitBayar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 308, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(89, 89, 89)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cardnumberTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bankTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(debitBayar)
+                .addContainerGap(115, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Debit", jPanel7);
@@ -357,7 +417,7 @@ public class Pembayaran extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(363, 363, 363)
                         .addComponent(qrSubmitBtn)))
-                .addContainerGap(279, Short.MAX_VALUE))
+                .addContainerGap(295, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -380,9 +440,9 @@ public class Pembayaran extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(JPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 9, Short.MAX_VALUE))
+                        .addGap(0, 25, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 794, Short.MAX_VALUE)
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -520,6 +580,58 @@ public class Pembayaran extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_kasBayarActionPerformed
 
+    private void bankTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bankTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bankTextFieldActionPerformed
+
+    private void cardnumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cardnumberTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cardnumberTextFieldActionPerformed
+
+    private void debitBayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_debitBayarActionPerformed
+        String bank = bankTextField.getText();
+        String cardnumber = cardnumberTextField.getText();
+        
+        KartuDebit debit = new KartuDebit(bank, cardnumber);
+        
+        String totalHargaString = totalHargaTextField.getText();
+        totalHargaString = totalHargaString.replace(",", "");
+        float totalHargaFloat = Float.parseFloat(totalHargaString);
+        debit.setTotalHarga(totalHargaFloat);
+        
+        String waktuPembayaran = waktuPembayaranTextField.getText();
+        debit.setWaktuPembayaran(waktuPembayaran);
+        
+        String IDPembayaran = idPembayaranTextField.getText();
+        String formattedOutput = IDPembayaran.substring(2);
+        int result = Integer.parseInt(formattedOutput);
+        debit.setIDPembayaran(result);
+        
+        String jenis = jenisBarang.substring(0,2);
+        
+       if(jenis.equals("PL")){
+            JOptionPane.showMessageDialog(this,"Pulsa Telah Terkirim");
+        } else if(jenis.equals("TN")){
+            token frame = new token();
+            frame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Pembayaran Berhasil");
+           
+        }
+
+        try {
+            debit.simpanDatabase();
+            generateIDPembayaran();
+        } catch (SQLException ex) {
+            Logger.getLogger(Pembayaran.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        POSFrame frame = new POSFrame();
+        frame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_debitBayarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -558,12 +670,17 @@ public class Pembayaran extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanel1;
+    private javax.swing.JTextField bankTextField;
+    private javax.swing.JTextField cardnumberTextField;
+    private javax.swing.JButton debitBayar;
     private javax.swing.JTextField idPembayaranTextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
